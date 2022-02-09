@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="site-token" content="{{ site_token() }}">
     <link rel="shortcut icon" href="{{ site_favicon() }}">
-    <title>@yield('title') | BlockDot</title>
+    <title>@yield('title') | Copo Technologies</title>
     {{-- <title>@yield('title') | {{ site_whitelabel('title') }}</title> --}}
     <link rel="stylesheet" href="{{ asset(style_theme('vendor')) }}">
     <link rel="stylesheet" href="{{ asset(style_theme('admin')) }}">

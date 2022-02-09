@@ -109,6 +109,18 @@ class APIController extends Controller
         return ($type=='full') ? $response_full : $response_minimal;
     }
 
+
+
+
+
+    public function transfer_matic(Request $request)
+    {
+     
+       print_r($request->all());
+
+
+
+     }
     /**
      * Display the specified resource.
      * @return \Illuminate\Http\Response

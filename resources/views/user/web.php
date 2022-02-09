@@ -11,6 +11,7 @@
 */
 use App\Http\Controllers\StripeController;
 
+
 if(application_installed()){
     Route::get('/install/final', function(){
         return redirect('/');
@@ -76,8 +77,8 @@ Route::prefix('user')->middleware(['auth', 'user', 'verify_user', 'g2fa'])->name
     Route::get('stripe', [StripeController::class, 'stripe']);
     Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
     Route::post("/token-transfer", 'User\UserController@token_transfer' )->name('token-transfer');
-    Route::post('/autocomplete-fetch', 'User\UserController@autocomplete_fetch')->name('autocomplete-fetch');
-    Route::get('/transfer/matic', 'User\UserController@transfer_matic' )->name('transfer-matic');
+    Route::post('autocomplete-fetch', 'User\UserController@autocomplete_fetch')->name('autocomplete-fetch');
+
     // User Ajax Request
     Route::name('ajax.')->prefix('ajax')->group(function () {
         Route::post('/account/wallet-form', 'User\UserController@get_wallet_form')->name('account.wallet');

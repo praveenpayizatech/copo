@@ -44,7 +44,8 @@ $decimal_max = (token('decimal_max')) ? token('decimal_max') : 0;
 @endif
 <div class="content-area card">
     <div class="card-innr">
-        <form action="javascript:void(0)" method="post" class="token-purchase">
+        <form action="f-request" method="post" class="token-purchase">
+            @csrf
             <div class="card-head">
                 <h4 class="card-title">
                 {{ __('Choose currency and calculate :SYMBOL token price', ['symbol' => $symbol]) }}
@@ -190,6 +191,7 @@ $decimal_max = (token('decimal_max')) ? token('decimal_max') : 0;
             @endif
             <input type="hidden" id="data_amount" value="0">
             <input type="hidden" id="data_currency" value="{{ $default_method }}">
+            <!-- <button>Buy Now</button> -->
         </form>
     </div> {{-- .card-innr --}}
 </div> {{-- .content-area --}}

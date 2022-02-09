@@ -27,6 +27,8 @@ use PragmaRX\Google2FA\Google2FA;
 use App\Notifications\PasswordChange;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use GuzzleHttp\Client;
+
 
 class UserController extends Controller
 {
@@ -58,8 +60,9 @@ class UserController extends Controller
         $contribution = Transaction::user_contribution();
         $tc = new \App\Helpers\TokenCalculate();
         $active_bonus = $tc->get_current_bonus('active');
+        $all_users=User::all();
 
-        return view('user.dashboard', compact('user', 'stage', 'active_bonus', 'contribution'));
+        return view('user.dashboard', compact('user', 'stage', 'active_bonus', 'contribution','all_users' ));
     }
 
 
@@ -497,6 +500,160 @@ class UserController extends Controller
      * @since 1.0
      * @return void
      */
+    public function token_transfer(Request $request)
+    {
+        $id = Auth::user()->id;
+        //User::where('email', "$request->user")->update(['tokenBalance' => '500']);
+
+       $user_tokenBalance=User::where('id', "$id")->first()->tokenBalance; 
+              
+       $send_tokens=$request->total_tokens;
+       $userid_to_send_token=User::where('email', "$request->user_name")->orwhere('name', "$request->user_name")->first();
+       
+         /*
+         $user = User::FindOrFail(Auth::id());
+         $user->tokenBalance = '500';
+         $user_saved = $user->save();
+         $user_tokenBalance=User::where('id', "$id")->first()->tokenBalance; 
+
+         dd(  $user_tokenBalance);
+        */
+
+       if( $user_tokenBalance>$send_tokens && $userid_to_send_token != null )
+       {
+        $send_id_to_user=User::where('email', "$request->user_name")->orwhere('name', "$request->user_name")->first()->id;
+
+        $sendto_user_token=User::where('email', "$request->user_name")->orwhere('name', "$request->user_name")->first()->tokenBalance; 
+      
+        $user_token_balance_to_update= User::FindOrFail($send_id_to_user);
+        
+       
+            $user_token_balance_to_update->tokenBalance = $sendto_user_token + $request->total_tokens;
+            
+            $user_data=User::where('id', "$id")->first();
+            $user_data->tokenBalance=$user_tokenBalance-$request->total_tokens;
+           // $sender_balance->tokenBalance=$user_tokenBalance-
+
+            $user_saved = $user_token_balance_to_update->save();
+            
+            $user_saved1 = $user_data->save();
+            //To check LoginedIn user balence
+            //dd(User::where('id', "$id")->first()->tokenBalance);
+           // dd($sendto_user_token);
+            echo "<script>alert('Token Added');
+            window.location='/user';
+            </script>";
+
+          }else{
+
+            echo "<script>alert('Something Wrong?? Please Check your balance first or sending id');
+        window.location='/user';
+        </script>";
+
+          }
+
+       
+        
+        /*
+
+        $user = User::FindOrFail(Auth::id());
+                    $user->tokenBalance = '500';
+                    $user_saved = $user->save();
+
+
+       $user_tokenBalance=User::where('id', "$id")->first()->tokenBalance; 
+
+       */
+
+       //dd($user_tokenBalance );
+        //return redirect()->back()->with('msg', 'Transfer Completed');  
+        //echo "<script>alert('Transfer value is:.$request->total_tokens.');</script>";
+        //return view('user.token_transfer')->render();
+        
+    }
+
+
+    public function autocomplete_fetch(Request $request)
+    {
+        /*
+        echo "<script>alert('".$request->get('query')."');</script>";
+        exit();
+        */
+        if($request->get('query'))
+        {
+            
+         $query = $request->get('query');
+         
+         $data=User::where('name', 'LIKE', "%{$query}%")->orwhere('email', 'LIKE', "%{$query}%")->limit(10)->get();
+         
+         /*
+         $data = DB::table('users')
+           ->where('name', 'LIKE', "%{$query}%")
+           ->get();
+          */
+         $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+         
+         foreach($data as $row)
+         {
+          $output .= '
+          <li><a href="#">'.$row->name.'</a></li>
+          ';
+         }
+         $output .= '</ul>';
+         echo $output;
+        } 
+
+
+    }
+
+    public function transfer_matic (){
+
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  //CURLOPT_URL => "http://127.0.0.1:5000/user/transfer/matic",
+    CURLOPT_URL => "http://67.205.180.249:5000/user/transfer/matic",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "POST",
+  CURLOPT_HTTPHEADER => array(
+    "Cache-Control: no-cache",
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+
+    $arr = json_decode($response, TRUE);
+  dd ($arr);
+}
+
+        /*
+       //print_r($request->all());
+         $client = new Client();
+        $data = $client->post('http://127.0.0.1:5000/user/transfer/matic');
+        $response = $data->getBody('name');
+
+        dd(response()->json($response));
+        //print_r($data);
+       // echo "<H1>This is Test data</H1>";
+            //$response = Http::get('http://127.0.0.1:5000/user/transfer/matic'); 
+
+            */
+             
+       
+    }
+
     public function get_wallet_form(Request $request)
     {
         return view('modals.user_wallet')->render();
@@ -520,3 +677,4 @@ class UserController extends Controller
         }
     }
 }
+

@@ -175,6 +175,7 @@ class RegisterController extends Controller
                 try {
                     $user->notify(new ConfirmEmail($user));
                 } catch (\Exception $e) {
+                    print_r($e);
                     session('warning', 'User registered successfully, but we unable to send confirmation email!');
                 }
             }

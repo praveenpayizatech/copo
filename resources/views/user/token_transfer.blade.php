@@ -1,64 +1,81 @@
-@extends('layouts.user')
-@section('title', __('User Dashboard'))
-@php
-$has_sidebar = false;
-$base_currency = base_currency();
-$image = (gws('welcome_img_hide', 0)==0) ? 'welcome.png' : '';
-@endphp
 
-@section('content')
-<div class="content-area user-account-dashboard">
-   
-    @include('layouts.messages')
-    <div class="row">
-        <div class="col-lg-4">
-            {!! UserPanel::user_balance_card($contribution, ['vers' => 'side', 'class'=> 'card-full-height']) !!}
-            
-        </div>
-        <div class="col-lg-4 col-md-6">
-        
-            {!! UserPanel::user_token_block('', ['vers' => 'buy']) !!}
-            
-        </div>
-        <div class="col-lg-4 col-md-6">
-            
-            <div class="account-info card card-full-height">
-           
-                <div class="card-innr">
-                    {!! UserPanel::user_account_status() !!}
-        
-                    
-                    <div class="gaps-2x"></div>
-                    {!! UserPanel::user_account_wallet() !!}
-                </div>
-            </div>
-        </div>
-        @if(get_page('home_top', 'status') == 'active')
-        <div class="col-12{{ (gws('user_sales_progress', 1)==1) ? ' col-lg-7' : '' }}">
-            {!! UserPanel::content_block('welcome', ['image' => $image, 'class' => 'card-full-height']) !!}
-        </div>
-        @if(gws('user_sales_progress', 1)==1)
-        <div class="col-12 col-lg-5">
-            {!! UserPanel::token_sales_progress('',  ['class' => 'card-full-height']) !!}
-        </div>
-        @endif
-        @endif
-
-    </div>
-</div>
-
-<!-- Add Token -->
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="en" class="js">
 <head>
-        
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="apps" content="TokenLite">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="JybdBvui93I5xEZRQi9G7jpcl8GxQVu8v8O78xzk">
+    <meta name="site-token" content="67b9bKti7GZDrZw08v8jXOV9wM1Id28b">
+    <link rel="shortcut icon" href="http://copotechnologies.com/images/favicon.png">
+    <title>Pending Transactions | Copo Technologies</title>
+    
+    <link rel="stylesheet" href="http://copotechnologies.com/assets/css/vendor.bundle.css?ver=20210714130">
+    <link rel="stylesheet" href="http://copotechnologies.com/assets/css/style.css?ver=20210714130">
+    <!-- TokenLite v1301283a20210714. Application Developed by Softnio -->
 </head>
 
 <body class="admin-dashboard page-user">
+    <div class="topbar-wrap">
+        <div class="topbar is-sticky">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <ul class="topbar-nav d-lg-none">
+                        <li class="topbar-nav-item relative">
+                            <a class="toggle-nav" href="#">
+                                <div class="toggle-icon">
+                                    <span class="toggle-line"></span>
+                                    <span class="toggle-line"></span>
+                                    <span class="toggle-line"></span>
+                                    <span class="toggle-line"></span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="topbar-logo">
+                        <a href="http://copotechnologies.com" class="site-brand">
+                                                        <img height="40" src="http://copotechnologies.com/images/logo-light.png"  alt="TokenLite Application">
+                    
+                            
+                                                    </a>
+                    </div>
+                    <ul class="topbar-nav">
+                        <li class="topbar-nav-item relative">
+                            <span class="user-welcome d-none d-lg-inline-block">Hello! User</span>
+                            <a class="toggle-tigger user-thumb" href="#"><em class="ti ti-user"></em></a>
+                            <div class="toggle-class dropdown-content dropdown-content-right dropdown-arrow-right user-dropdown">
+                                <div class="user-status">
+                                    <h6 class="user-status-title">User <span class="text-white-50">(UD00001)</span></h6>
+                                    <div class="user-status-balance"><small><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6e0f0a0307002e09030f0702400d0103">[email&#160;protected]</a></small></div>
+                                </div>
+                                <ul class="user-links">
+                                    <li><a href="http://copotechnologies.com/admin/profile"><i class="ti ti-id-badge"></i>My Profile</a></li>
 
+                                    <li><a href="http://copotechnologies.com/admin/profile/activity"><i class="ti ti-eye"></i>Activity</a></li>
+                                </ul>
+                                <ul class="user-links bg-light">
+                                    <li><a href="http://copotechnologies.com/log-out" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="ti ti-power-off"></i>Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+    
+    <div class="page-content">
+
+    <a href="#" class="btn btn-sm btn-auto btn-primary" data-toggle="modal" data-target="#addTnx">
+                                    <em class="fas fa-plus-circle"></em><span>Add <span class="d-none d-sm-inline-block">Tokens</span></span>
+                                </a>
+
+</div>
+
+    
+    <form id="logout-form" action="http://copotechnologies.com/logout" method="POST" style="display: none;">
+        <input type="hidden" name="_token" value="JybdBvui93I5xEZRQi9G7jpcl8GxQVu8v8O78xzk">    </form>
     <div id="ajax-modal"></div>
     <div class="modal fade" id="addTnx">
     <div class="modal-dialog modal-dialog-md modal-dialog-centered">
@@ -66,10 +83,8 @@ $image = (gws('welcome_img_hide', 0)==0) ? 'welcome.png' : '';
             <a href="#" class="modal-close" data-dismiss="modal" aria-label="Close"><em class="ti ti-close"></em></a>
             <div class="popup-body popup-body-md">
                 <h3 class="popup-title">Manually Add Tokens</h3>
-                <form action="{{'user/token-transfer'}}" method="POST" class="validate-modern" id="add_token1" autocomplete="off">
-                @csrf
-                    <!-- Hide unnecessary fields 
-                    <div class="row">
+                <form action="http://copotechnologies.com/admin/ajax/transactions/insert" method="POST" class="validate-modern" id="add_token1" autocomplete="off">
+                    <input type="hidden" name="_token" value="JybdBvui93I5xEZRQi9G7jpcl8GxQVu8v8O78xzk">                    <div class="row">
                         <div class="col-sm-6">
                             <div class="input-item input-with-label">
                                 <label class="input-item-label">Tranx Type</label>
@@ -92,44 +107,35 @@ $image = (gws('welcome_img_hide', 0)==0) ? 'welcome.png' : '';
                         </div>
                     </div>
                     <div class="row">
-                -->
                         <div class="col-sm-6">
                             <div class="input-item input-with-label">
-                                
-                                <!-- <label class="input-item-label">Token Add By Email</label> -->
+                                <label class="input-item-label">Token Added To</label>
                                 <div class="input-wrap">
-
-                    <!-- <input Type="text" name ="user" required="" style="border-width: thin" > 
-                    
-                    
-                   <h3> OR</h3> -->
-                    <label class="input-item-label">Token Add By Name Or Email</label>
-   
-   <div class="form-group">
-    <input type="text" name="user_name" id="user_name" required="" class="form-control input-lg" placeholder="Enter Name Or Email" />
-    <div id="userList">
-    </div>
-   
-   {{ csrf_field() }}
-  </div>
-                                    <!--
                                     <select name="user" required="" class="select-block select-bordered" data-dd-class="search-on">
-                                                                                <option value="43">Select</option>
+                                                                                <option value="43">Nitin</option>
                                                                                 <option value="42"><template class="__cf_email__" data-cfemail="3e4757465f58510d060d077e4b4e4d5a5153105d5153">[email&#160;protected]</template></option>
                                                                                 <option value="39">RONAK</option>
-                                                                               
+                                                                                <option value="36">Rutveek#</option>
+                                                                                <option value="35">Someel shah</option>
+                                                                                <option value="34">akram</option>
+                                                                                <option value="32">Nikhil Lokhande</option>
+                                                                                <option value="31">Karan Punwani</option>
+                                                                                <option value="30">Karan Punwani</option>
+                                                                                <option value="29">Paras</option>
+                                                                                <option value="26">Sahil</option>
+                                                                                <option value="27">Jolly</option>
+                                                                                <option value="48">Bhavik</option>
+                                                                                <option value="49">sahil payiza</option>
+                                                                                <option value="50">Samaksh Mathur</option>
+                                                                                <option value="51">sahil</option>
+                                                                                <option value="59">try</option>
+                                                                                <option value="64"><template class="__cf_email__" data-cfemail="563c332f373a6f6e65646e163f3533253f3a397835393b">[email&#160;protected]</template></option>
+                                                                                <option value="67">asasas</option>
                                                                             </select>
-
-
                                     <span class="input-note">Select account to add token.</span>
-                                    -->
                                 </div>
-                                
                             </div>
                         </div>
-
-
-                <!--  
                         <div class="col-sm-6">
                             <div class="input-item input-with-label">
                                 <label class="input-item-label">Token for Stage</label>
@@ -196,7 +202,6 @@ $image = (gws('welcome_img_hide', 0)==0) ? 'welcome.png' : '';
                                 </div>
                             </div>
                         </div>
-                -->
                         <div class="col-sm-6">
                             <div class="input-item input-with-label">
                                 <label class="input-item-label">Number of Token</label>
@@ -205,15 +210,6 @@ $image = (gws('welcome_img_hide', 0)==0) ? 'welcome.png' : '';
                                 </div>
                             </div>
                         </div>
-                       
-                      <!-- <h3> All Users </h3>
-                        @foreach($all_users as $all_users)
-                {{$all_users->name}}<br>
-               
-           @endforeach -->
-
- 
-                        <!-- 
                         <div class="col-sm-6">
                             <div class="input-item input-with-label">
                                 <label class="input-item-label d-none d-sm-inline-block">&nbsp;</label>
@@ -224,7 +220,6 @@ $image = (gws('welcome_img_hide', 0)==0) ? 'welcome.png' : '';
                             </div>
                         </div>
                     </div>
-                -->
                     <button type="submit" class="btn btn-primary">Add Token</button>
                     <div class="gaps-3x"></div>
                     <div class="note note-plane note-light">
@@ -232,8 +227,6 @@ $image = (gws('welcome_img_hide', 0)==0) ? 'welcome.png' : '';
                         <p>If checked <strong>'Bonus Adjusted'</strong>, it will applied bonus based on selected stage (only for Purchase type).</p>
                     </div>
                 </form>
-
-                
             </div>
         </div>
     </div>
@@ -252,40 +245,5 @@ $image = (gws('welcome_img_hide', 0)==0) ? 'welcome.png' : '';
     <script src="http://copotechnologies.com/assets/js/admin.app.js?ver=20210714130"></script>
         </body>
 </html>
-
-
-
-<!-- End token-transfer -->
-
-<script>
-$(document).ready(function(){
-
- $('#user_name').keyup(function(){ 
-        var query = $(this).val();
-        if(query != '')
-        {
-         var _token = $('input[name="_token"]').val();
-         $.ajax({
-          url:"{{ 'user/autocomplete-fetch' }}",
-          method:"POST",
-          data:{query:query, _token:_token},
-          success:function(data){
-           $('#userList').fadeIn();  
-                    $('#userList').html(data);
-          }
-         });
-        }
-    });
-
-    $(document).on('click', 'li', function(){  
-        $('#user_name').val($(this).text());  
-        $('#userList').fadeOut();  
-    });  
-
-});
-</script>
-
-
-
-
-@endsection
+                
+                

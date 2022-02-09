@@ -8,7 +8,7 @@
         @include('vendor.notice')
         <div class="card content-area content-area-mh">
             <div class="card-innr">
-                <div class="card-head has-aside">
+                <div class="card-head has-aside"> 
                     <h4 class="card-title">{{ ucfirst($is_page) }} Transactions</h4>
                     <div class="card-opt">
                         <ul class="btn-grp btn-grp-block guttar-20px">
@@ -445,6 +445,7 @@
             <div class="popup-body popup-body-md">
                 <h3 class="popup-title">Manually Add Tokens</h3>
                 <form action="{{ route('admin.ajax.transactions.add') }}" method="POST" class="validate-modern" id="add_token1" autocomplete="off">
+                    @csrf
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="input-item input-with-label">

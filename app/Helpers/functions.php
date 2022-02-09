@@ -2287,7 +2287,7 @@ if (!function_exists('site_copyrights')) {
         $app_info = app_info('name').' v'.app_info('version');
         $copyright = $year.site_info('name') . '. ' . gws('site_copyright');
 
-        $copyright = (is_admin() && !is_2fa_lock() && $is_env) ? $year.' BlockDot v1.3.0. .All Rights Reserved. <br class="d-block d-md-none">Application Developed by <a href="https://payizatech.com" target="_blank">PayizaTech</a>.' : $copyright;
+        $copyright = (is_admin() && !is_2fa_lock() && $is_env) ? $year.'Copo Technologies.All Rights Reserved. <br class="d-block d-md-none">Application Developed by <a href="https://payizatech.com" target="_blank">PayizaTech</a>.' : $copyright;
 
         return $copyright;
     }

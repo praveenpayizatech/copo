@@ -168,11 +168,9 @@ class UserPanel
             $return .= '<div class="card card-full-height"><div class="card-innr">';
             $return .= '<h6 class="card-title card-title-sm">'. active_stage()->name .'<span class="badge badge-success ucap">' . __($status) . '</span></h6>';
             // $return .= '<h3 class="text-dark">1 ' . $_SYM . ' = ' . to_num($token_1price, 'max', ',', true) . ' ' . $_CUR .' <span class="d-block text-exlight ucap fs-12">1 '. $_CUR . ' = ' . to_num($token_1rate, 'max', ',', true) . ' ' . $token_ratec .'</span></h3>';
-            $return .= '<h3 class="text-dark">1 ' . $_SYM . ' = ' . to_num($token_1price, 'max', ',', true) . ' ' . $_CUR .' <span class="d-block text-exlight ucap fs-12">1 '. $_CUR . ' = ' . 74.62 . ' INR </span></h3>';
-            $return .= '<span class="d-block text-exlight ucap fs-12">1 Copo = ' . 1.044 . ' INR </span></h3>';
+            $return .= '<h3 class="text-dark">1 ' . $_SYM . ' = ' . to_num($token_1price, 'max', ',', true) . ' ' . $_CUR .' <span class="d-block text-exlight ucap fs-12">1 '. $_CUR . ' = ' . 74.6266 . ' INR </span></h3>';
             $return .= '<div class="gaps-0-5x"></div><div class="d-flex align-items-center justify-content-between mb-0"><a href="'.route('user.token').'" class="btn btn-md btn-primary">'.__('Buy Token Now').'</a>
-            <a href="#" data-toggle="modal" data-target="#addTnx" class="btn btn-md btn-primary">'.__('Transfer Token').'</a>
-                    
+                      
             </div>';
                 
             $return .= '</div></div>';
@@ -589,10 +587,8 @@ class UserPanel
         }
 
         $return = '<div' . $g_id . ' class="card card-sales-progress' . $g_cls . '"><div class="card-innr">'.$title.$progress.$progress_bar.$sales_state.'</div></div>';
-     
-        $view= '';
-        //return $return;
-        return $view;
+
+        return $return;
     }
 
     /**

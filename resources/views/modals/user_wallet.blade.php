@@ -10,10 +10,20 @@ $wallet_type_selection = ''; $is_single_wallet = false; $wallet_name = '';
 $is_disable = ($user->walletType != NULL) ? ' disabled' : '';
 $no_wallet = ($wallet_count >= 1) ? false : true;
 
+/*
 if ($wallet_count >= 2) {
     foreach ($wallets as $wname => $wlabel) {
         $wallet_type_selection .= '<option '.($user->walletType == $wname ? 'selected ' : '').'value="'.$wname.'">'.$wlabel.'</option>';
+        
     }
+*/
+if ($wallet_count >= 2) {
+    foreach ($wallets as $wname => $wlabel) {
+        $wallet_type_selection .= '<option '.($user->walletType == $wname ? 'selected ' : '').'value="'.$wname.'">Polygon</option>';
+        break;
+    }
+
+
 } elseif($wallet_count==1) {
     $wallet_type_selection .=  '<input type="hidden" name="wallet_name" value="'.strtolower(array_values($wallets)[0]).'">';
     $is_single_wallet = true;
@@ -85,6 +95,7 @@ if ($wallet_count >= 2) {
                                     <div class="input-item input-with-label">
                                         <label for="swallletr" class="input-item-label">{{ (!has_wallet() ? __('Select Wallet') : __('Wallet Type')) }}</label>
                                         <select class="select-bordered select select-block" name="wallet_name" id="swallletr">
+
                                             {!! $wallet_type_selection !!}
                                         </select>
                                     </div>

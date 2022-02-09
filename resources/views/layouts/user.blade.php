@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="js">
 <head>
+
     <meta charset="utf-8">
     <meta name="apps" content="{{ site_whitelabel('apps') }}">
     <meta name="author" content="{{ site_whitelabel('author') }}">
@@ -8,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="site-token" content="{{ site_token() }}">
     <link rel="shortcut icon" href="{{ site_favicon() }}">
-    <title>@yield('title') | BlockDot</title>
+    <title>@yield('title') | Copo Technologies</title>
     {{-- <title>@yield('title') | {{ site_whitelabel('title') }}</title> --}}
     <link rel="stylesheet" href="{{ asset(style_theme('vendor')) }}">
     <link rel="stylesheet" href="{{ asset(style_theme('user')) }}">
@@ -18,6 +19,7 @@
 @endif
 </head>
 <body class="user-dashboard page-user theme-modern">
+
     <div class="topbar-wrap">
         <div class="topbar is-sticky">
             <div class="container">
@@ -92,7 +94,12 @@
     </div>{{-- .topbar-wrap --}}
 
     <div class="page-content">
-        <div class="container">
+    
+
+    <div class="container">
+
+
+
             <div class="row">
                 @php
                 $has_sidebar = isset($has_sidebar) ? $has_sidebar : false;
@@ -101,14 +108,20 @@
                 $col_cont_cls2 = isset($content_class) ? css_class($content_class) : null;
                 $col_side_cls2 = isset($aside_class) ? css_class($aside_class) : null;
                 @endphp
-
+                
                 <div class="main-content {{ empty($col_cont_cls2) ? $col_cont_cls : $col_cont_cls2 }}">
-                    @if(!has_wallet() && gws('token_wallet_req')==1 && !empty(token_wallet()))
+
+              <div> 
+              
+ 
+                            @if(!has_wallet() && gws('token_wallet_req')==1 && !empty(token_wallet()))
                     <div class="d-lg-none">
                         {!! UserPanel::add_wallet_alert() !!}
+                        
                     </div>
                     @endif
                     @yield('content')
+                    
                 </div>
 
                 @if ($has_sidebar==true)
@@ -119,10 +132,12 @@
                     </div>
                     @endif
                     <div class="account-info card">
+                        
                         <div class="card-innr">
                             {!! UserPanel::user_account_status() !!}
                             @if(!empty(token_wallet()))
                             <div class="gaps-2-5x"></div>
+                            
                             {!! UserPanel::user_account_wallet() !!}
                             @endif
                         </div>
